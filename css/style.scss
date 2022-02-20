@@ -1,0 +1,296 @@
+// --------------------------Сбрасывающтй стиль и шрифты-------------------------------
+@import url(reset.css);
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+// --------------------------Цвета--------------------------------------------------------
+$light-grey: #ffd64e85;
+$grey: #353535;
+$white: #fff;
+$black: #202020;
+$gold: #d4af37;
+$red: #0C1522;
+$mymessage: #14315a;
+$mymessage-sending: #d2e5ff;
+$friendmessage: #486792;
+
+
+// --------------------------Тело и оболочка----------------------------------------------
+body {
+  font-family: "Roboto";
+  font-size: 16px;
+  font-weight: 400;
+  color: $white;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at bottom, #0d1d31 0%, #0c0d13 100%);
+}
+
+//-------------------------------Контейнер-----------------------------------
+.messager__container {
+	width: 320px;
+	box-sizing: border-box;
+	padding: 8px;
+	border-radius: 5px;
+	z-index: 100;
+}
+
+//--------------------------------Верхняя панель 2.0--------------------------------
+.top-buttons {
+	width: 100%;
+	height: 32px;
+	margin-bottom: 8px;
+	display: flex;
+	justify-content: space-between;
+}
+.settings {
+	width: 150px;
+	padding: 8px;
+	background-color: inherit;
+	color: $white;
+	border-radius: 5px;	
+	transition: ease-in-out 0.3s;
+	&:hover{
+		font-size: 16px;
+		transform: scale(0.98, 0.98);
+		background-color: $white;
+		color: $black;
+	}
+}
+.exit {
+	width: 150px;
+	padding: 8px;
+	background-color: inherit;
+	color: $white;
+	border-radius: 5px;
+	transition: ease-in-out 0.3s;
+	&:hover{
+		font-size: 16px;
+		transform: scale(0.98, 0.98);
+		background-color: $white;
+		color: $black;
+	}
+}
+
+//--------------------------------Центральная панель сообщений-------------------------
+.messages {
+	width: 100%;
+	height: 437px;
+	padding: 8px;
+	border-radius: 5px;
+	overflow-y: scroll;	
+}
+
+.messages-window {
+	min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+
+.my-message {
+	align-self: flex-end;
+	width: fit-content;
+	padding: 8px;
+	margin-top: 8px;
+	background-color: $mymessage;
+	border-radius: 5px;
+}
+
+// .sending {
+// 	background-color: $mymessage-sending;
+// }
+
+.my-message__text {
+}
+.my-message__time {
+	float: right;
+	font-style: italic;
+	margin-top: 4px;
+	opacity: 0.7;
+}
+.friend-message {
+	align-self: flex-start;
+	max-width: fit-content;
+	padding: 8px;
+	margin-top: 8px;
+	background-color: $friendmessage;
+	border-radius: 5px;
+}
+.friend-message__text {
+}
+.friend-message__time {
+	float: right;
+	font-style: italic;
+	margin-top: 4px;
+	opacity: 0.7;
+}
+
+//-------------------------------------Кастомный скролл---------------------------
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 5px grey; 
+	border-radius: 5px;
+}
+  
+::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background-color: $white
+}
+
+//-------------------------------------Нижняя панель 2.0-----------------------------
+.bottom-buttons {
+	padding-left: 8px;
+	margin-top: 8px;
+	width: 100%;
+	height: 32px;
+	display: flex;
+	justify-content: space-between;
+	flex-shrink:0;
+}
+.text-area{
+	height: 32px;
+	width: 255px;
+	border-radius: 5px;
+	background-color: $white;
+	padding-left: 8px;
+	transition: 0.3s ease-in-out;
+	&:focus {
+		color: $white;
+		background-color: $mymessage
+	}
+}
+.send-message {
+	margin-left: 8px;
+	position: fixed;
+	outline: none;
+	/* Для синий ободки */
+	border: 0;
+	background: transparent;
+	
+}
+.send {
+	fill: $white;
+	transition: 0.3s ease-in-out;
+	&:hover {
+	  fill: $mymessage;
+	}
+  }
+
+//---------------------------------------Звездный фон---------------------------
+
+@mixin sp-layout {
+	@media screen and (max-width: 750px) {
+	  @content;
+	}
+  }
+
+@function random_range($min, $max) {
+	$rand: random();
+	$random_range: $min + floor($rand * (($max - $min) + 1));
+	@return $random_range;
+  }
+  
+  .stars {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	transform: rotate(-70deg);
+	z-index: 3;
+  }
+  
+  .star {
+	$star-count: 50;
+	--star-color: var(--primary-color);
+	--star-tail-length: 6em;
+	--star-tail-height: 2px;
+	--star-width: calc(var(--star-tail-length) / 6);
+	--fall-duration: 9s;
+	--tail-fade-duration: var(--fall-duration);
+	z-index: 2;
+	position: absolute;
+	top: var(--top-offset);
+	left: 0;
+	width: var(--star-tail-length);
+	height: var(--star-tail-height);
+	color: var(--star-color);
+	background: linear-gradient(45deg, currentColor, transparent);
+	border-radius: 50%;
+	filter: drop-shadow(0 0 6px currentColor);
+	transform: translate3d(104em, 0, 0);
+	animation: fall var(--fall-duration) var(--fall-delay) linear infinite, tail-fade var(--tail-fade-duration) var(--fall-delay) ease-out infinite;
+	
+	@include sp-layout {
+	  // For mobile performance, tail-fade animation will be removed QAQ
+	  animation: fall var(--fall-duration) var(--fall-delay) linear infinite;
+	}
+  
+	@for $i from 1 through $star-count {
+	  &:nth-child(#{$i}) {
+		--star-tail-length: #{random_range(500em, 750em) / 100};
+		--top-offset: #{random_range(0vh, 10000vh) / 100};
+		--fall-duration: #{random_range(6000, 12000s) / 1000};
+		--fall-delay: #{random_range(0, 10000s) / 1000};
+	  }
+	}
+  
+	&::before, &::after {
+	  position: absolute;
+	  content: '';
+	  top: 0;
+	  left: calc(var(--star-width) / -2);
+	  width: var(--star-width);
+	  height: 100%;
+	  background: linear-gradient(45deg, transparent, currentColor, transparent);
+	  border-radius: inherit;
+	  animation: blink 2s linear infinite;
+	}
+  
+	&::before {
+	  transform: rotate(45deg);
+	}
+  
+	&::after {
+	  transform: rotate(-45deg);
+	}
+  }
+  
+  @keyframes fall {
+	to {
+	  transform: translate3d(-30em, 0, 0);
+	}
+  }
+  
+  @keyframes tail-fade {
+	0%, 50% {
+	  width: var(--star-tail-length);
+	  opacity: 1;
+	}
+  
+	70%, 80% {
+	  width: 0;
+	  opacity: 0.4;
+	}
+  
+	100% {
+	  width: 0;
+	  opacity: 0;
+	}
+  }
+  
+  @keyframes blink {
+	50% {
+	  opacity: 0.6;
+	}
+  }
