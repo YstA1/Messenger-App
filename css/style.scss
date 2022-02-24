@@ -12,6 +12,9 @@ $red: #0C1522;
 $mymessage: #14315a;
 $mymessage-sending: #d2e5ff;
 $friendmessage: #486792;
+$popup: #FFF;
+$popupbackground: rgb(7, 35, 66);
+
 
 
 // --------------------------Тело и оболочка----------------------------------------------
@@ -51,10 +54,10 @@ body {
 .settings {
 	width: 150px;
 	padding: 8px;
-	background-color: inherit;
-	color: $white;
+	background-color: $white;
+	color: $black;
 	border-radius: 5px;	
-	transition: ease-in-out 0.3s;
+	transition: ease-in-out 0.2s;
 	&:hover{
 		font-size: 16px;
 		transform: scale(0.98, 0.98);
@@ -65,10 +68,10 @@ body {
 .exit {
 	width: 150px;
 	padding: 8px;
-	background-color: inherit;
-	color: $white;
+	background-color: $white;
+	color: $black;
 	border-radius: 5px;
-	transition: ease-in-out 0.3s;
+	transition: ease-in-out 0.2s;
 	&:hover{
 		font-size: 16px;
 		transform: scale(0.98, 0.98);
@@ -294,3 +297,107 @@ body {
 	  opacity: 0.6;
 	}
   }
+
+  //------------------------------Модальное окно--------------------------------------
+
+.popup_container {
+	opacity: 0;
+	pointer-events: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.4);
+	transition: opacity 0.3s ease-in-out;
+}
+
+.popup_container.show {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.popup {
+  background-color: $popup;
+	width: 260px;
+	height: 180px;
+	max-width: 100%;
+	padding: 14px;
+	border-radius: 10px;
+}
+.popup_header {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 30px;
+	color: $black;
+}
+.popup_name {
+	font-size: 18px;
+	
+}
+.popup_close {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
+	position: absolute;
+	right: 0;
+	font-size: 26px;
+	background-color: inherit;
+	transition: 0.3s ease-in-out;
+	&:hover {
+		background-color: $friendmessage;
+	}
+}
+.popup_main {
+	font-weight: 400;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.popup_main-text {
+	font-weight: 600;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-size: 14px;
+	color: $mymessage;
+}
+.popup_main_input {
+	
+	font-size: 16px;
+	height: 32px;
+	width: 100%;
+	border-radius: 5px;
+	background-color: $friendmessage;
+	padding-left: 8px;
+	transition: 0.3s ease-in-out;
+	&::placeholder{
+		opacity: 0.7;
+		color: $white;
+	}
+	&:focus {
+		color: $white;
+		background-color: $mymessage
+	}
+}
+.popup_main-button {
+	font-size: 12px;
+	font-weight: 600;
+	padding: 10px;
+	margin-top: 10px;
+	border-radius: 10px;
+	background-color: $mymessage-sending;
+	transition: 0.3s ease-in-out;
+	&:hover {
+		background-color: $friendmessage;
+		color: $white;
+	}
+}
