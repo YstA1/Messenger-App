@@ -353,8 +353,11 @@ body {
 	font-size: 26px;
 	background-color: inherit;
 	transition: 0.3s ease-in-out;
+	background-color: $friendmessage;
+	color: $white;
 	&:hover {
-		background-color: $friendmessage;
+		background-color: $white;
+		color: $black;
 	}
 }
 .popup_main {
@@ -370,11 +373,18 @@ body {
 	font-size: 14px;
 	color: $mymessage;
 }
+
+
+.popup_form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 .popup_main_input {
-	
 	font-size: 16px;
 	height: 32px;
-	width: 100%;
+	width: 220px;
 	border-radius: 5px;
 	background-color: $friendmessage;
 	padding-left: 8px;

@@ -14,5 +14,15 @@ export const UI_ELEMENTS = {
 		WINDOW: document.getElementById("messages-window"),
 		MY_MESSAGE: document.getElementsByClassName("my-message"),
 		FRIEND_MESSAGE: document.getElementsByClassName("friend-message"),
-	}
+	},
+	POPUP: {
+		CONTAINER: document.getElementById('popup_container'),
+		CLOSE: document.getElementById('popup_close'),
+		NAME: document.getElementById("popup_name"),
+		TEXT: document.getElementById("popup_main-text"),
+		FORM: document.getElementById("popup_form"),
+		INPUT: document.getElementById("popup_main_input"),
+		BUTTON: document.getElementById("popup_main-button"),
+		
+	},
 }
