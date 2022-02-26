@@ -9,10 +9,13 @@ export const UI_ELEMENTS = {
 		INPUT: document.getElementById("input"),
 		SEND: document.getElementById("send"),
 	},
-
+	TEMPLATE: {
+		NAME: document.getElementsByClassName("my-message__name")
+	},
 	MESSAGES: {
 		WINDOW: document.getElementById("messages-window"),
 		MY_MESSAGE: document.getElementsByClassName("my-message"),
+		MY_MESSAGE_NAME: document.getElementsByClassName("my-message__name"),
 		FRIEND_MESSAGE: document.getElementsByClassName("friend-message"),
 	},
 	POPUP: {

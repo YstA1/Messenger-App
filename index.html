@@ -69,31 +69,18 @@
 			<div class="messages" id="messages">
 				<div class="messages-window" id="messages-window">
 					<div class="my-message">
-						<div class="my-message__text">Я: Добрый день!</div>
+						<div class="my-message__name">Я</div>
+						<div class="my-message__text">Добрый день!</div>
 						<div class="my-message__time">18:45</div>
 					</div>
 					<div class="friend-message">
-						<div class="friend-message__text">Собеседник мой: Добрый день!</div>
+						<div class="friend-message__name">Собеседник мой</div>
+						<div class="friend-message__text">Добрый день!</div>
 						<div class="friend-message__time">18:45</div>
-					</div>
-					<div class="friend-message">
-						<div class="friend-message__text">Собеседник мой: А это второе и, кажется, оно очень длинное, чтобы поместиться на одной строке</div>
-						<div class="friend-message__time">18:45</div>
-					</div>
-					<div class="my-message sending">
-						<div class="my-message__text">Я: Добрый день!</div>
-						<div class="my-message__time">18:45</div>
-					</div>
-					<div class="friend-message">
-						<div class="friend-message__text">Собеседник мой: А это второе и, кажется, оно очень длинное, чтобы поместиться на одной строке</div>
-						<div class="friend-message__time">18:45</div>
-					</div>
-					<div class="my-message sending">
-						<div class="my-message__text">Я: Добрый день!</div>
-						<div class="my-message__time">18:45</div>
 					</div>
 					<template id="message_template">
 						<div class="my-message sending">
+							<div class="my-message__name" id="my-message__name">Я</div>
 							<div class="my-message__text" id="my-message__text">Я: Добрый день!</div>
 							<div class="my-message__time">18:45</div>
 						</div>
@@ -127,6 +114,6 @@
 		</div>
 	</div>
 
-	<script src= "js/main.js" type="module"></script>
+	<script src= "js/main.js" type="module"></script>	
 </body>
 </html>

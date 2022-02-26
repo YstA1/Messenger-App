@@ -109,10 +109,16 @@ body {
 // .sending {
 // 	background-color: $mymessage-sending;
 // }
-
+.my-message__name {
+	margin-bottom: 5px;
+	font-size: 14px;
+	opacity: 0.5;
+	text-align: right;
+}
 .my-message__text {
 }
 .my-message__time {
+	font-size: 12px;
 	float: right;
 	font-style: italic;
 	margin-top: 4px;
@@ -126,6 +132,12 @@ body {
 	background-color: $friendmessage;
 	border-radius: 5px;
 }
+.friend-message__name{
+	margin-bottom: 5px;
+	font-size: 14px;
+	opacity: 0.5;
+	text-align: left;
+}
 .friend-message__text {
 }
 .friend-message__time {
@@ -133,6 +145,7 @@ body {
 	font-style: italic;
 	margin-top: 4px;
 	opacity: 0.7;
+	font-size: 12px;
 }
 
 //-------------------------------------Кастомный скролл---------------------------
