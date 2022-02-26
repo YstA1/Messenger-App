@@ -56,10 +56,13 @@ function checkPopup (name) {
 		UI_ELEMENTS.POPUP.FORM.addEventListener('submit', submitName);
 	}
 	if (name === "Авторизация") {
+		UI_ELEMENTS.POPUP.FORM.removeEventListener('submit', checkCode);
+		UI_ELEMENTS.POPUP.FORM.removeEventListener('submit', submitName);
 		UI_ELEMENTS.POPUP.FORM.addEventListener('submit', sendEmail);
 	}
 	if (name === "Подтверждение") {
 		UI_ELEMENTS.POPUP.FORM.removeEventListener('submit', sendEmail);
+		UI_ELEMENTS.POPUP.FORM.removeEventListener('submit', submitName);
 		UI_ELEMENTS.POPUP.FORM.addEventListener('submit', checkCode);
 	}
 }
@@ -151,7 +154,7 @@ function submitName (e) {
 
 
 
-		
+
 		userName = content.name;
 		Array.from(UI_ELEMENTS.MESSAGES.MY_MESSAGE_NAME).forEach(element => element.innerText = userName)
 
