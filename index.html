@@ -68,49 +68,20 @@
 			</div> 
 			<div class="messages" id="messages">
 				<div class="messages-window" id="messages-window">
-					<div class="my-message">
-						<div class="my-message__name">Я</div>
-						<div class="my-message__text">Добрый день!</div>
-						<div class="my-message__time">18:45</div>
-					</div>
-					<div class="my-message">
-						<div class="my-message__name">Я</div>
-						<div class="my-message__text">Добрый день!</div>
-						<div class="my-message__time">18:45</div>
-					</div>
-					<div class="my-message">
-						<div class="my-message__name">Я</div>
-						<div class="my-message__text">Добрый день!</div>
-						<div class="my-message__time">18:45</div>
-					</div>
-					<div class="my-message">
-						<div class="my-message__name">Я</div>
-						<div class="my-message__text">Добрый день!</div>
-						<div class="my-message__time">18:45</div>
-					</div>
-					<div class="my-message">
-						<div class="my-message__name">Я</div>
-						<div class="my-message__text">Добрый день!</div>
-						<div class="my-message__time">18:45</div>
-					</div>
-					<div class="my-message">
-						<div class="my-message__name">Я</div>
-						<div class="my-message__text">Добрый день!</div>
-						<div class="my-message__time">18:45</div>
-					</div>
-					<div class="friend-message">
-						<div class="friend-message__name">Собеседник мой</div>
-						<div class="friend-message__text">Дурачок?</div>
-						<div class="friend-message__time">18:45</div>
-					</div>
-					<template id="message_template">
+					<template id="my-message_template">
 						<div class="my-message sending">
 							<div class="my-message__name" id="my-message__name">Я</div>
 							<div class="my-message__text" id="my-message__text">Я: Добрый день!</div>
 							<div class="my-message__time">18:45</div>
 						</div>
 					</template>
-					
+					<template id="friend-message_template">
+						<div class="friend-message">
+							<div class="friend-message__name" id="friend-message__name">Я</div>
+							<div class="friend-message__text" id="friend-message__text">Я: Добрый день!</div>
+							<div class="friend-message__time">18:45</div>
+						</div>
+					</template>
 				</div>
 			</div>
 			<div class="bottom-buttons" id="bottom-buttons">
@@ -139,6 +110,6 @@
 		</div>
 	</div>
 
-	<script src= "js/main.js" type="module"></script>	
+	<script src= "js/main.js" type="module" id="main-JS"></script>	
 </body>
 </html>

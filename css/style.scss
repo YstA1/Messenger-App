@@ -98,8 +98,9 @@ body {
 
 
 .my-message {
+	word-break: break-word;
 	align-self: flex-end;
-	width: fit-content;
+	max-width: 100%;
 	padding: 8px;
 	margin-top: 8px;
 	background-color: $mymessage;
@@ -110,6 +111,7 @@ body {
 // 	background-color: $mymessage-sending;
 // }
 .my-message__name {
+	width: fit-content;
 	margin-bottom: 5px;
 	font-size: 14px;
 	opacity: 0.5;
@@ -125,8 +127,9 @@ body {
 	opacity: 0.7;
 }
 .friend-message {
+	width: fit-content;
+	word-break: break-word;
 	align-self: flex-start;
-	max-width: fit-content;
 	padding: 8px;
 	margin-top: 8px;
 	background-color: $friendmessage;

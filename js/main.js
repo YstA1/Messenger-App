@@ -2,8 +2,16 @@ import { UI_ELEMENTS } from "./view.js";
 
 let token = '';
 let userName = 'Я';
+let friendName = 'Собеседник';
+let socket = '';
+let userDefaultEmail = '';
+
+const mainJs = document.getElementById('main-JS');
+
 
 function setListeners () {
+	//доп функции (скролл на старте)
+	mainJs.addEventListener('load', logOut)
 	UI_ELEMENTS.TOP_BUTTONS.SETTINGS.addEventListener('click', showSettings);
 	UI_ELEMENTS.TOP_BUTTONS.EXIT.addEventListener('click', logOut);
 	UI_ELEMENTS.BOTTOM_BUTTONS.FORM.addEventListener('submit', sendMessage);
@@ -17,20 +25,66 @@ function scrollToBottom () {
 }
 scrollToBottom ();
 
+
+// function renderMyMessage () {
+// }
+
+
 function sendMessage (e) {
 	e.preventDefault();
-	const messageTemplate = document.getElementById('message_template');
+	const messageTemplate = document.getElementById('my-message_template');
 	const message = messageTemplate.content.cloneNode(true);
 	const messageText = message.getElementById('my-message__text')
 	const messageName = message.getElementById('my-message__name')
 
+	//Исправить NAME
 	messageName.innerText = userName;
+
 	messageText.innerText = UI_ELEMENTS.BOTTOM_BUTTONS.INPUT.value
+	sendMessageSocket (messageText.innerText);
+	
+	
+	// UI_ELEMENTS.MESSAGES.WINDOW.append(message);
+	// UI_ELEMENTS.BOTTOM_BUTTONS.FORM.reset();
+	
+}
+
+function getMessage (userMessage, userEmail) {
+	let messageType = '';
+	
+	if (userEmail === userDefaultEmail) {
+		messageType = 'my-message';
+	}
+	else {
+		messageType = 'friend-message'
+	}
+
+	const messageTemplate = document.getElementById(`${messageType}_template`);
+	const message = messageTemplate.content.cloneNode(true);
+	const messageText = message.getElementById(`${messageType}__text`)
+	const messageName = message.getElementById(`${messageType}__name`)
+
+	//Исправить NAME
+	messageName.innerText = friendName;
+	messageText.innerText = userMessage;
 
 	UI_ELEMENTS.MESSAGES.WINDOW.append(message);
 	UI_ELEMENTS.BOTTOM_BUTTONS.FORM.reset();
-	scrollToBottom ();
+	
 }
+
+// function renderFriendMessage (friendMessage) {
+// 	const messageTemplate = document.getElementById('friend-message_template');
+// 	const message = messageTemplate.content.cloneNode(true);
+// 	const messageText = message.getElementById('friend-message__text')
+// 	const messageName = message.getElementById('friend-message__name')
+
+// 	//Исправить NAME
+// 	messageName.innerText = friendName;
+// 	messageText.innerText = friendMessage;
+
+// 	UI_ELEMENTS.MESSAGES.WINDOW.append(message);
+// }
 
 function showPopup () {
 	UI_ELEMENTS.POPUP.CONTAINER.classList.add('show');
@@ -67,15 +121,6 @@ function checkPopup (name) {
 	}
 }
 
-
-
-
-
-
-
-
-
-
 function logOut () {
 	renderPopup("Авторизация", "Введите почту", "Получить код", "example@gmail.com", "")
 	showPopup()
@@ -84,6 +129,7 @@ function logOut () {
 function sendEmail (e) {
 	e.preventDefault();
 	(async () => {
+		userDefaultEmail = UI_ELEMENTS.POPUP.INPUT.value;
 		const chatServiceResponse = await fetch('https://chat1-341409.oa.r.appspot.com/api/user', {
 		  method: 'POST',
 		  headers: {
@@ -92,9 +138,6 @@ function sendEmail (e) {
 		  },
 		  body: JSON.stringify({email: UI_ELEMENTS.POPUP.INPUT.value})
 		});
-		
-		const content = await chatServiceResponse.json();
-		console.log(content);
 	  })();
 	renderPopup("Подтверждение", "Введите отправленный код", "Войти", "код", "")
 	showPopup()
@@ -106,36 +149,6 @@ function showSettings (e) {
 	showPopup();
 	//какая-то логика с фетч
 }
-
-
-
-function checkCode (e) {
-	e.preventDefault();
-	(async () => {
-		token = UI_ELEMENTS.POPUP.INPUT.value;
-	
-		const chatGetMe = await fetch('https://chat1-341409.oa.r.appspot.com/api/user/me', {
-		  method: 'GET',
-		  headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${token}`,
-		  },
-		});
-
-		const responseStatus = chatGetMe.status;
-		if (responseStatus === 200) {
-			closePopup();
-		}
-		else {
-			alert("Неверный код");
-			UI_ELEMENTS.POPUP.FORM.reset();
-		}
-		const response = await chatGetMe.json();
-		console.log(response);
-	  })();
-}
-
 
 function submitName (e) {
 	e.preventDefault();
@@ -175,5 +188,74 @@ function submitName (e) {
 
 
 
+function checkCode (e) {
+	e.preventDefault();
+	token = UI_ELEMENTS.POPUP.INPUT.value;
+	getChatHistory ()
+	socketConnect ()
+}
 
 
+
+// -----------------------------Получение истории сообщений-------------------------
+function getChatHistory () {
+	(async () => {
+		const CHAT_GET_HISTORY = await fetch('https://chat1-341409.oa.r.appspot.com/api/messages/', {
+		  method: 'GET',
+		  headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+			'Authorization': `Bearer ${token}`,
+		  },
+		});
+
+		const responseStatus = CHAT_GET_HISTORY.status;
+		if (responseStatus === 200) {
+			closePopup();
+		}
+		else {
+			alert("Неверный код");
+			UI_ELEMENTS.POPUP.FORM.reset();
+		}
+		const response = await CHAT_GET_HISTORY.json();
+		const responseMessages = response.messages;
+		
+
+
+
+
+		// забыл про email ---------------------------------------
+		responseMessages.forEach(message => getMessage(message.text));
+		scrollToBottom ();
+
+
+
+		
+	  })();
+}
+
+// -----------------------------Подключение веб-сокета ------------------------------------
+function socketConnect () {
+	socket = new WebSocket(`ws://chat1-341409.oa.r.appspot.com/websockets?${token}`);
+
+	socket.onopen = function () {
+		alert("Соединение установлено");	
+	}
+	
+	socket.onmessage = function(event) {
+		const data = event.data;
+		const dataText = JSON.parse(data);
+		const user = dataText.user;
+		const userEmail = user.email;
+		const userMessage = dataText.text;
+		getMessage(userMessage, userEmail);
+		scrollToBottom ();
+	};	
+}
+
+function sendMessageSocket (message) {
+	socket.send(JSON.stringify({
+		text: message,
+	}));
+	alert("Сообщение отправлено")
+}
