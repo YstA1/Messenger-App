@@ -49,7 +49,7 @@ function sendMessage (e) {
 	
 }
 
-function getMessage (userMessage, userEmail) {
+function getMessage (userMessage, userEmail, userNickname) {
 	let messageType = '';
 	
 	if (userEmail === userDefaultEmail) {
@@ -65,7 +65,7 @@ function getMessage (userMessage, userEmail) {
 	const messageName = message.getElementById(`${messageType}__name`)
 
 	//Исправить NAME
-	messageName.innerText = friendName;
+	messageName.innerText = userNickname;
 	messageText.innerText = userMessage;
 
 	UI_ELEMENTS.MESSAGES.WINDOW.append(message);
@@ -128,9 +128,9 @@ function logOut () {
 
 function sendEmail (e) {
 	e.preventDefault();
-	(async () => {
+	(() => {
 		userDefaultEmail = UI_ELEMENTS.POPUP.INPUT.value;
-		const chatServiceResponse = await fetch('https://chat1-341409.oa.r.appspot.com/api/user', {
+		fetch('https://chat1-341409.oa.r.appspot.com/api/user', {
 		  method: 'POST',
 		  headers: {
 			'Accept': 'application/json',
@@ -225,7 +225,13 @@ function getChatHistory () {
 
 
 		// забыл про email ---------------------------------------
-		responseMessages.forEach(message => getMessage(message.text));
+		responseMessages.forEach(data => {
+			const userData = data.user;
+			const userNickname = userData.name;
+			const userEmail = userData.email;
+			getMessage(data.text, userEmail, userNickname)
+			
+		});
 		scrollToBottom ();
 
 
@@ -247,9 +253,11 @@ function socketConnect () {
 		const dataText = JSON.parse(data);
 		const user = dataText.user;
 		const userEmail = user.email;
+		const userNickname = user.name;
 		const userMessage = dataText.text;
-		getMessage(userMessage, userEmail);
+		getMessage(userMessage, userEmail, userNickname);
 		scrollToBottom ();
+		console.log(user)
 	};	
 }
 
@@ -259,3 +267,5 @@ function sendMessageSocket (message) {
 	}));
 	alert("Сообщение отправлено")
 }
+
+
