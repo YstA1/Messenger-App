@@ -236,7 +236,7 @@ function getChatHistory () {
 
 // -----------------------------Подключение веб-сокета ------------------------------------
 function socketConnect () {
-	socket = new WebSocket(`ws://chat1-341409.oa.r.appspot.com/websockets?${token}`);
+	socket = new WebSocket(`wss://chat1-341409.oa.r.appspot.com/websockets?${token}`);
 
 	socket.onopen = function () {
 		alert("Соединение установлено");	
